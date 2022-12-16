@@ -6,18 +6,19 @@ import {
   checkIntel,
   checkStock,
 } from "../../redux/actions/filterActions";
+import { loadProduct } from "../../redux/actions/productAction";
+import fetchProduct from "../../redux/thunk/product/fetchProduct";
 
 const Home = () => {
-  const [products, setProducts] = useState([]);
+  const products = useSelector((state) => state.productReducer.products);
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
   const { stock, brands } = state.filterReducer.filters;
   const activeClass = "text-white bg-indigo-500 border-white";
 
+  console.log(state);
   useEffect(() => {
-    fetch("http://localhost:5000/products")
-      .then((res) => res.json())
-      .then((data) => setProducts(data.data));
+    dispatch(fetchProduct());
   }, []);
 
   let content;
@@ -26,7 +27,7 @@ const Home = () => {
     content = (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-14">
         {products.map((product) => (
-          <ProductCard key={product.model} product={product} />
+          <ProductCard key={product._id} product={product} />
         ))}
       </div>
     );
@@ -38,7 +39,7 @@ const Home = () => {
         {products
           .filter((product) => product.status === true)
           .map((product) => (
-            <ProductCard key={product.model} product={product} />
+            <ProductCard key={product._id} product={product} />
           ))}
       </div>
     );
@@ -56,7 +57,7 @@ const Home = () => {
             }
           })
           .map((product) => (
-            <ProductCard key={product.model} product={product} />
+            <ProductCard key={product._id} product={product} />
           ))}
       </div>
     );
@@ -74,7 +75,7 @@ const Home = () => {
             }
           })
           .map((product) => (
-            <ProductCard key={product.model} product={product} />
+            <ProductCard key={product._id} product={product} />
           ))}
       </div>
     );

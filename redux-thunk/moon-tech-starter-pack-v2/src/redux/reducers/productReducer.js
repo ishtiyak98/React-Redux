@@ -1,6 +1,7 @@
 import {
   ADD_PRODUCT,
   ADD_TO_CART,
+  LOAD_PRODUCT,
   PRODUCT_LOADED,
   REMOVE_FROM_CART,
   REMOVE_PRODUCT,
@@ -11,12 +12,17 @@ const initialState = {
   products: [],
 };
 
-const productReducer = (state = initialState, action) => {
+const productReducer =(state = initialState, action) => {
   const selectedProduct = state.cart.find(
     (product) => product._id === action.payload._id
   );
 
   switch (action.type) {
+    case LOAD_PRODUCT:
+      return {
+        ...state,
+        products: action.payload,
+      };
     case ADD_PRODUCT:
       return {
         ...state,
