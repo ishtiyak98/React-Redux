@@ -5,7 +5,7 @@ const initialState = {
 };
 
 const counterSlice = createSlice({
-  name: "counter-app",
+  name: "counter",
   initialState,
   reducers: {
     increment: (state, action) => {
